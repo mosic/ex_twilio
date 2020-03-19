@@ -42,6 +42,7 @@ defmodule ExTwilio.Parser do
   """
   @spec parse(HTTPoison.Response.t(), module) :: success | error
   def parse(response, module) do
+    IO.inspect(response, label: "PARSE")
     handle_errors(response, fn body ->
       Poison.decode!(body, as: target(module))
     end)
@@ -95,6 +96,7 @@ defmodule ExTwilio.Parser do
 
   # @spec handle_errors(response, ((String.t) -> any)) :: success | success_delete | error
   defp handle_errors(response, fun) do
+    IO.inspect(response, label: "RESP")
     case response do
       %{body: body, status_code: status} when status in [200, 201] ->
         {:ok, fun.(body)}
