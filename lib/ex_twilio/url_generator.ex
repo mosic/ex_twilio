@@ -67,6 +67,9 @@ defmodule ExTwilio.UrlGenerator do
         ["ExTwilio", "Conversations" | _] ->
           url = add_segments(Config.conversations_url(), module, id, options)
           IO.inspect(url, label: "UUUUUURRRRRLLLL")
+          IO.inspect(module, label: "MOD")
+          IO.inspect(id, label: "ID")
+          IO.inspect(options, label: "OPTS")
           {url, options}
 
         _ ->
