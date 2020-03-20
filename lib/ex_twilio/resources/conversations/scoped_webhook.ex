@@ -1,6 +1,6 @@
-defmodule ExTwilio.Conversations.Webhook do
+defmodule ExTwilio.Conversations.ScopedWebhook do
   @moduledoc """
-  Represents a Webhook resource in Twilio Conversations.
+  Represents a Scoped Webhook resource in Twilio Conversations.
 
   - [Twilio docs](https://www.twilio.com/docs/conversations/api/conversation-resource)
 
