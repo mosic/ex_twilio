@@ -64,6 +64,11 @@ defmodule ExTwilio.UrlGenerator do
           url = add_segments(Config.studio_url(), module, id, options)
           {url, options}
 
+        ["ExTwilio", "Conversations" | _] ->
+          options = add_flow_to_options(module, options)
+          url = add_segments(Config.conversations_url(), module, id, options)
+          {url, options}
+
         _ ->
           # Add Account SID segment if not already present
           options = add_account_to_options(module, options)
