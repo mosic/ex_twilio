@@ -17,7 +17,12 @@ defmodule ExTwilio.Conversations.ScopedWebhook do
   defstruct account_sid: nil,
             conversation_sid: nil,
             sid: nil,
-            configuration: nil,
+            configuration_url: nil,
+            configuration_method: nil,
+            configuration_filters: nil,
+            configuration_triggers: nil,
+            configuration_flow_sid: nil,
+            configuration_replay_after: nil,
             target: nil,
             url: nil
 
