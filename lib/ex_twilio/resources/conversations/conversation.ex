@@ -1,4 +1,4 @@
-defmodule ExTwilio.Conversations.Conversation do
+defmodule ExTwilio.Conversations do
   @moduledoc """
   Represents a Conversation resource in the Twilio Conversations.
 
@@ -19,7 +19,8 @@ defmodule ExTwilio.Conversations.Conversation do
             date_created: nil,
             date_updated: nil,
             identities: nil,
-            url: nil
+            url: nil,
+            links: nil
 
   use ExTwilio.Resource,
     import: [
