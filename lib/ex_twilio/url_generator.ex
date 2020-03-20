@@ -65,7 +65,6 @@ defmodule ExTwilio.UrlGenerator do
           {url, options}
 
         ["ExTwilio", "Conversations" | _] ->
-          options = add_flow_to_options(module, options)
           url = add_segments(Config.conversations_url(), module, id, options)
           {url, options}
 
