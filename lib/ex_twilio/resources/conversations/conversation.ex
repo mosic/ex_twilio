@@ -19,8 +19,7 @@ defmodule ExTwilio.Conversations do
             date_created: nil,
             date_updated: nil,
             identities: nil,
-            url: nil,
-            links: nil
+            url: nil
 
   use ExTwilio.Resource,
     import: [
