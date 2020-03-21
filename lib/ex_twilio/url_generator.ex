@@ -209,6 +209,7 @@ defmodule ExTwilio.UrlGenerator do
         into: "" do
       IO.inspect(module, label: "PAR-MOD")
       IO.inspect(key, label: "PAR-KEY")
+      IO.inspect(list, label: "PAR-list")
       IO.inspect(list[key], label: "PAR-list[key]")
       segment(:parent, {%ExTwilio.Parent{module: module, key: key}, list[key]})
     end
@@ -252,3 +253,6 @@ defmodule ExTwilio.UrlGenerator do
     name |> to_string |> Macro.camelize()
   end
 end
+
+# {:ok, convo} = ExTwilio.Conversations.Conversations.find("CH9b7a8ea7c49242f1b4ef84988bacabb0")
+# ExTwilio.Conversations.Participant.create(conversations: convo.sid, messaging_binding_address: "+19492808977", messaging_binding_proxy_address: "+16502002193")
