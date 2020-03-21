@@ -1,4 +1,4 @@
-defmodule ExTwilio.Conversation.Participant do
+defmodule ExTwilio.Conversations.Participant do
   @moduledoc """
   Represents a Participant resource in Twilio Conversations.
 
