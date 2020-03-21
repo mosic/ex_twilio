@@ -126,8 +126,8 @@ defmodule ExTwilio.UrlGenerator do
   def to_query_string(list) do
     list
     |> Enum.flat_map(fn
-      # {key, value} when is_list(value) -> Enum.map(value)
-      {key, value} -> [{key, value}]
+      # {key, value} when is_list(value) -> Enum.map(value, &{camelize(key), &1})
+      {key, value} -> [{camelize(key), value}]
     end)
     # |> case do
     #   {:ok, res} -> res
