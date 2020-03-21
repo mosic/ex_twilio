@@ -206,8 +206,12 @@ defmodule ExTwilio.UrlGenerator do
     IO.inspect(allowed_keys, label: "ALLOWED")
 
     for %ExTwilio.Parent{module: module, key: key} <- allowed_keys,
-        into: "",
-        do: segment(:parent, {%ExTwilio.Parent{module: module, key: key}, list[key]})
+        into: "" do
+      IO.inspect(module, label: "PAR-MOD")
+      IO.inspect(key, label: "PAR-KEY")
+      IO.inspect(list[key], label: "PAR-list[key]")
+      segment(:parent, {%ExTwilio.Parent{module: module, key: key}, list[key]})
+    end
   end
 
   defp build_segments(type, allowed_keys, list) do
