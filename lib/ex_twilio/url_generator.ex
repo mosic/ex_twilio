@@ -217,8 +217,17 @@ defmodule ExTwilio.UrlGenerator do
 
   @spec segment(atom, {any, any}) :: String.t()
   defp segment(type, segment)
-  defp segment(type, {_key, nil}) when type in [:parent, :child], do: ""
-  defp segment(:child, {_key, value}), do: "/" <> to_string(value)
+
+  defp segment(type, {_key, nil}) when type in [:parent, :child] do
+    IO.inspect(type, label: "SEG-TYPE1")
+    ""
+  end
+
+  defp segment(:child, {_key, value}) do
+    IO.inspect(value, label: "SEG-TYPE2")
+    "/" <> to_string(value)
+  end
+
   defp segment(:main, {key, nil}), do: "/" <> inflect(key)
   defp segment(:main, {key, value}), do: "/#{inflect(key)}/#{value}"
 
