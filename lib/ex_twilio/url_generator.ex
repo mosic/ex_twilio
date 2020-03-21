@@ -88,6 +88,8 @@ defmodule ExTwilio.UrlGenerator do
   end
 
   defp add_segments(url, module, id, options) do
+    IO.inspect(normalize_parents(module.parents), label: "NORMALIZE")
+
     # Append parents
     url = url <> build_segments(:parent, normalize_parents(module.parents), options)
 
@@ -221,6 +223,7 @@ defmodule ExTwilio.UrlGenerator do
   defp segment(:main, {key, value}), do: "/#{inflect(key)}/#{value}"
 
   defp segment(:parent, {%ExTwilio.Parent{module: module, key: _key}, value}) do
+    IO.inspect(module, label: "NEEDED-MOD")
     "/#{module.resource_name}/#{value}"
   end
 
