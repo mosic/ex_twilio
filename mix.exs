@@ -8,7 +8,7 @@ defmodule ExTwilio.Mixfile do
       elixir: "~> 1.2",
       name: "ExTwilio",
       description: "Twilio API library for Elixir",
-      source_url: "https://github.com/danielberkompas/ex_twilio",
+      source_url: "https://github.com/nutheory/ex_twilio",
       package: package(),
       docs: docs(),
       deps: deps()
@@ -42,10 +42,11 @@ defmodule ExTwilio.Mixfile do
 
   defp package do
     [
-      maintainers: ["Daniel Berkompas"],
+      maintainers: ["Derek Rush"],
       licenses: ["MIT"],
       links: %{
-        "Github" => "https://github.com/danielberkompas/ex_twilio"
+        "Github" => "https://github.com/nutheory/ex_twilio",
+        "forkedFrom" => "https://github.com/danielberkompas/ex_twilio"
       }
     ]
   end

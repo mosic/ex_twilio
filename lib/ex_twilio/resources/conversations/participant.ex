@@ -32,7 +32,7 @@ defmodule ExTwilio.Conversations.Participant do
             sid: nil,
             identity: nil,
             attributes: nil,
-            message_binding: %{
+            messaging_binding: %{
               projected_address: nil,
               address: nil,
               proxy_address: nil
