@@ -140,7 +140,7 @@ defmodule ExTwilio.UrlGenerator do
     #   err -> err
     # end
     |> IO.inspect(label: "QS1")
-    |> URI.encode_query()
+    |> Plug.Conn.query().encode()
     |> IO.inspect(label: "QS2")
   end
 
