@@ -127,7 +127,7 @@ defmodule ExTwilio.UrlGenerator do
     list
     |> Enum.flat_map(fn
       {key, value} when is_map(value) ->
-        Enum.reduce(value, fn {subKey, subVal}, acc ->
+        Enum.reduce(value, "", fn {subKey, subVal}, acc ->
           acc <> "#{camelize(key)}.#{camelize(subKey)}=#{subVal}&"
         end)
         |> String.replace_trailing("&", "")
