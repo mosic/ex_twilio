@@ -194,6 +194,8 @@ defmodule ExTwilio.Api do
   end
 
   def format_data(data) when is_list(data) do
+    IO.inspect(data, label: "FOMAT")
+    IO.inspect(Url.to_query_string(data), label: "FOMAT-P")
     Url.to_query_string(data)
   end
 
