@@ -126,15 +126,21 @@ defmodule ExTwilio.UrlGenerator do
   def to_query_string(list) do
     list
     |> Enum.flat_map(fn
-      # {key, value} when is_list(value) -> Enum.map(value, &{camelize(key), &1})
-      {key, value} -> [{camelize(key), value}]
+      {key, value} when is_map(value) ->
+        Enum.map(value, fn {subKey, subVal}, acc ->
+          ["\"#{camelize(key)}.#{camelize(subKey)}\": #{subVal}"]
+        end)
+
+      #  Enum.map(value, &{camelize(key), &1})
+      {key, value} ->
+        [{camelize(key), value}]
     end)
     # |> case do
     #   {:ok, res} -> res
     #   err -> err
     # end
     |> IO.inspect(label: "QS1")
-    |> Plug.Conn.Query.encode()
+    |> URI.encode_query()
     |> IO.inspect(label: "QS2")
   end
 
@@ -277,4 +283,4 @@ defmodule ExTwilio.UrlGenerator do
 end
 
 # {:ok, convo} = ExTwilio.Conversations.find("CH9b7a8ea7c49242f1b4ef84988bacabb0")
-# ExTwilio.Conversations.Participant.create(conversations: convo.sid, [messaging_binding_address: "+19492808977", messaging_binding_proxy_address: "+16502002193"])
+# ExTwilio.Conversations.Participant.create(%{identity: "BO6BBuY23y45rtiB87trMyt12"}, "MessagingBinding": [Address: "+19492808977", ProxyAddress: "+16502002193"], conversation: convo.sid)
