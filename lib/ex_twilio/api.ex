@@ -66,6 +66,8 @@ defmodule ExTwilio.Api do
   @spec create(atom, data, list) :: Parser.success() | Parser.error()
   def create(module, data, options \\ []) do
     data = format_data(data)
+    IO.inspect(data, label: "DATA")
+    IO.inspect(options, label: "DATA-OPTS")
 
     module
     |> Url.build_url(nil, options)
