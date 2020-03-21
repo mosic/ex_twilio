@@ -126,8 +126,8 @@ defmodule ExTwilio.UrlGenerator do
   def to_query_string(list) do
     list
     |> Enum.flat_map(fn
-      {key, value} when is_map(value) and key === "attributes" ->
-        [{camelize(key), Poison.encode!(value)}]
+      {:attributes, value} when is_map(value) ->
+        [{"Attributes", Poison.encode!(value)}]
 
       {key, value} when is_map(value) ->
         Enum.map(value, fn {subKey, subVal} ->
@@ -284,4 +284,4 @@ defmodule ExTwilio.UrlGenerator do
 end
 
 # {:ok, convo} = ExTwilio.Conversations.find("CH9b7a8ea7c49242f1b4ef84988bacabb0")
-# ExTwilio.Conversations.Participant.create(%{messaging_binding: %{address: "+19492808977", proxy_address: "+16502002193"}}, conversation: convo.sid)
+# ExTwilio.Conversations.Participant.create(%{messaging_binding: %{address: "+19492808977", proxy_address: "+16502002193"}, attributes: %{role: "admin", user_id: 6}}, conversation: convo.sid)
