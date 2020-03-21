@@ -127,7 +127,7 @@ defmodule ExTwilio.UrlGenerator do
     list
     |> Enum.flat_map(fn
       {key, value} when is_map(value) ->
-        Enum.map(value, fn {subKey, subVal}, acc ->
+        Enum.map(value, fn {subKey, subVal} ->
           {"#{camelize(key)}.#{camelize(subKey)}", subVal}
         end)
         |> IO.inspect(label: "QS1")
