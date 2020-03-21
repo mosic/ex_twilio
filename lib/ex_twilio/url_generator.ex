@@ -173,6 +173,8 @@ defmodule ExTwilio.UrlGenerator do
 
   @spec normalize_parents(list) :: list
   defp normalize_parents(parents) do
+    IO.inspect(parents, label: "NORMY")
+
     parents
     |> Enum.map(fn
       key when is_atom(key) ->
@@ -255,4 +257,4 @@ defmodule ExTwilio.UrlGenerator do
 end
 
 # {:ok, convo} = ExTwilio.Conversations.Conversations.find("CH9b7a8ea7c49242f1b4ef84988bacabb0")
-# ExTwilio.Conversations.Participant.create(conversations: convo.sid, messaging_binding_address: "+19492808977", messaging_binding_proxy_address: "+16502002193")
+# ExTwilio.Conversations.Participant.create(conversations: convo.sid, [messaging_binding_address: "+19492808977", messaging_binding_proxy_address: "+16502002193"])
