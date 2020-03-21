@@ -29,13 +29,13 @@ defmodule ExTwilio.UrlGeneratorTest do
 
   describe "query strings" do
     test "to_query_string can handle a value of type list without error" do
-      params = [
+      params = %{
         status_callback: "http://example.com/status_callback",
         status_callback_event: ["ringing", "answered", "completed"]
-      ]
+      }
 
       assert ExTwilio.UrlGenerator.to_query_string(params) ==
-               "StatusCallback=http%3A%2F%2Fexample.com%2Fstatus_callback&StatusCallbackEvent=ringing&StatusCallbackEvent=answered&StatusCallbackEvent=completed"
+               "StatusCallback=http%3A%2F%2Fexample.com%2Fstatus_callback&StatusCallbackEvent[]=ringing&StatusCallbackEvent[]=answered&StatusCallbackEvent[]=completed"
     end
 
     test "ignores parent keys at the root module level" do

@@ -39,7 +39,7 @@ defmodule ExTwilio.UrlGenerator do
 
   """
   @spec build_url(atom, String.t() | nil, any) :: String.t()
-  def build_url(module, id \\ nil, options) do
+  def build_url(module, id \\ nil, options \\ []) do
     {url, options} =
       case Module.split(module) do
         ["ExTwilio", "TaskRouter" | _] ->
@@ -126,11 +126,16 @@ defmodule ExTwilio.UrlGenerator do
   def to_query_string(list) do
     list
     |> Enum.flat_map(fn
-      {key, value} when is_list(value) -> Enum.map(value, &{camelize(key), &1})
+      # {key, value} when is_list(value) -> Enum.map(value)
       {key, value} -> [{camelize(key), value}]
     end)
-    |> URI.encode_query()
-    |> IO.inspect(label: "QS")
+    # |> case do
+    #   {:ok, res} -> res
+    #   err -> err
+    # end
+    |> IO.inspect(label: "QS1")
+    |> Plug.Conn.Query.encode()
+    |> IO.inspect(label: "QS2")
   end
 
   @doc """
