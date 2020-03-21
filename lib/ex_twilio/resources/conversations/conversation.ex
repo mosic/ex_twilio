@@ -1,4 +1,4 @@
-defmodule ExTwilio.Conversations.Conversation do
+defmodule ExTwilio.Conversations.Conversations do
   @moduledoc """
   Represents a Conversation resource in the Twilio Conversations.
 
