@@ -127,13 +127,10 @@ defmodule ExTwilio.UrlGenerator do
     list
     |> Enum.flat_map(fn
       {key, value} when is_map(value) ->
-        [
-          Enum.reduce(value, "", fn {subKey, subVal}, acc ->
-            acc <> "#{camelize(key)}.#{camelize(subKey)}=#{subVal}&"
-          end)
-          |> String.replace_trailing("&", "")
-          |> IO.inspect(label: "QS1")
-        ]
+        Enum.map(value, fn {subKey, subVal}, acc ->
+          {"#{camelize(key)}.#{camelize(subKey)}", subVal}
+        end)
+        |> IO.inspect(label: "QS1")
 
       #  Enum.map(value, &{camelize(key), &1})
       {key, value} ->
@@ -144,7 +141,7 @@ defmodule ExTwilio.UrlGenerator do
     #   err -> err
     # end
     |> IO.inspect(label: "QS1")
-    |> URI.encode_query()
+    |> Plug.Conn.Query.encode()
     |> IO.inspect(label: "QS2")
   end
 
