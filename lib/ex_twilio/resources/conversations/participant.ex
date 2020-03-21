@@ -1,4 +1,4 @@
-defmodule ExTwilio.Conversations.Participant do
+defmodule ExTwilio.Conversation.Participant do
   @moduledoc """
   Represents a Participant resource in Twilio Conversations.
 
@@ -51,6 +51,6 @@ defmodule ExTwilio.Conversations.Participant do
 
   def parents,
     do: [
-      %ExTwilio.Parent{module: ExTwilio.Conversations, key: :conversation}
+      %ExTwilio.Parent{module: ExTwilio.Conversation, key: :conversation}
     ]
 end
