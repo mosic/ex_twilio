@@ -61,8 +61,8 @@ defmodule ExTwilio.Resource do
       end
 
       if :create in import_functions do
-        @spec create(Api.data(), list) :: Parser.parsed_response()
-        def create(data, options \\ []), do: Api.create(__MODULE__, data, options)
+        @spec create(Api.data(), any) :: Parser.parsed_response()
+        def create(data, options), do: Api.create(__MODULE__, data, options)
       end
 
       if :update in import_functions do

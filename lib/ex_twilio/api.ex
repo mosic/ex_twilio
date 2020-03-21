@@ -63,8 +63,8 @@ defmodule ExTwilio.Api do
       ExTwilio.Api.create(ExTwilio.Call, [])
       {:error, %{"message" => "No 'To' number is specified"}, 400}
   """
-  @spec create(atom, data, list) :: Parser.success() | Parser.error()
-  def create(module, data, options \\ []) do
+  @spec create(atom, data, any) :: Parser.success() | Parser.error()
+  def create(module, data, options) do
     data = format_data(data)
     IO.inspect(data, label: "DATA")
     IO.inspect(options, label: "DATA-OPTS")
@@ -188,8 +188,10 @@ defmodule ExTwilio.Api do
 
   @spec format_data(data) :: binary
   def format_data(data) when is_map(data) do
+    IO.inspect(data, label: "TAMOF")
+
     data
-    |> Map.to_list()
+    # |> Map.to_list()
     |> Url.to_query_string()
   end
 

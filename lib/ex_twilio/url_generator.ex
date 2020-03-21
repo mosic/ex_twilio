@@ -38,8 +38,8 @@ defmodule ExTwilio.UrlGenerator do
       "#{Config.base_url()}/Accounts/account_sid/SIP/IpAccessControlLists/list/Resources/1.json"
 
   """
-  @spec build_url(atom, String.t() | nil, list) :: String.t()
-  def build_url(module, id \\ nil, options \\ []) do
+  @spec build_url(atom, String.t() | nil, any) :: String.t()
+  def build_url(module, id \\ nil, options) do
     {url, options} =
       case Module.split(module) do
         ["ExTwilio", "TaskRouter" | _] ->
@@ -80,6 +80,20 @@ defmodule ExTwilio.UrlGenerator do
       end
 
     # Append querystring
+    append_querystring(url, module, options)
+  end
+
+  defp append_querystring(url, module, options) when is_map(options) do
+    IO.inspect(options, label: "BOOM")
+
+    if Map.has_key?(options, :query) do
+      url <> options[:query]
+    else
+      url <> build_query(module, options)
+    end
+  end
+
+  defp append_querystring(url, module, options) when is_list(options) do
     if Keyword.has_key?(options, :query) do
       url <> options[:query]
     else
@@ -116,6 +130,7 @@ defmodule ExTwilio.UrlGenerator do
       {key, value} -> [{camelize(key), value}]
     end)
     |> URI.encode_query()
+    |> IO.inspect(label: "QS")
   end
 
   @doc """
@@ -256,5 +271,5 @@ defmodule ExTwilio.UrlGenerator do
   end
 end
 
-# {:ok, convo} = ExTwilio.Conversations.Conversations.find("CH9b7a8ea7c49242f1b4ef84988bacabb0")
+# {:ok, convo} = ExTwilio.Conversations.find("CH9b7a8ea7c49242f1b4ef84988bacabb0")
 # ExTwilio.Conversations.Participant.create(conversations: convo.sid, [messaging_binding_address: "+19492808977", messaging_binding_proxy_address: "+16502002193"])
