@@ -126,22 +126,18 @@ defmodule ExTwilio.UrlGenerator do
   def to_query_string(list) do
     list
     |> Enum.flat_map(fn
+      {key, value} when is_map(value) and key === "attributes" ->
+        [{camelize(key), Poison.encode!(value)}]
+
       {key, value} when is_map(value) ->
         Enum.map(value, fn {subKey, subVal} ->
           {"#{camelize(key)}.#{camelize(subKey)}", subVal}
         end)
         |> IO.inspect(label: "QS1")
 
-      {key, value} when is_map(value) and key === "attributes" ->
-        [{camelize(key), Poison.encode!(value)}]
-
       {key, value} ->
         [{camelize(key), value}]
     end)
-    # |> case do
-    #   {:ok, res} -> res
-    #   err -> err
-    # end
     |> IO.inspect(label: "QS1")
     |> Plug.Conn.Query.encode()
     |> IO.inspect(label: "QS2")
