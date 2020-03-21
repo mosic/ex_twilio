@@ -51,6 +51,6 @@ defmodule ExTwilio.Conversations.Participant do
 
   def parents,
     do: [
-      %ExTwilio.Parent{module: ExTwilio.Conversations.Conversations, key: :conversations}
+      %ExTwilio.Parent{module: ExTwilio.Conversations, key: :conversation}
     ]
 end
