@@ -123,7 +123,15 @@ defmodule ExTwilio.Parser do
            res
          end}
 
+      pre when is_map(pre) ->
+        if Map.has_key?(pre, :attributes) do
+          Map.update(pre, :attributes, %{}, &Poison.decode!(&1))
+        else
+          pre
+        end
+
       err ->
+        IO.inspect(err, label: "BOOOOOOOOOOOOOOOOOOOOM")
         err
     end
   end
