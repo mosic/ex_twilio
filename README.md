@@ -77,6 +77,12 @@ Then, create a `config/#{environment_name}.exs` file for each environment. You
 can then set the `config :ex_twilio` variables differently in each file.
 
 ## Usage
+Find -- ExTwilio.Conversations.Participant.find(SID, RESOURCE>: <RESOURCE_SID>) (id/string, options/keyword-list)
+List -- ExTwilio.Conversations.Participant.all(RESOURCE: <RESOURCE_SID>) (options/keyword-list)
+Create -- ExTwilio.Conversations.Participant.create(SID, DATA, RESOURCE: <RESOURCE_SID>) (id/string, data-params/map options/keyword-list)
+Update -- ExTwilio.Conversations.Participant.update(SID, DATA, RESOURCE: <RESOURCE_SID>) (id/string, data-params/map options/keyword-list)
+Stream -- ExTwilio.Conversations.Participant.stream(RESOURCE: <RESOURCE_SID>) |> Enum.into([]) (lazy operation, contains meta details for paging)
+Delete -- ExTwilio.Conversations.Participant.destroy(SID, RESOURCE: <RESOURCE_SID>) (id/string, options/keyword-list)
 
 ExTwilio comes with module for each supported Twilio API resource. For example,
 the "Call" resource is accessible through the `ExTwilio.Call` module. Depending
@@ -138,15 +144,6 @@ Twilio's Conversations API
 - [Participants](https://www.twilio.com/docs/conversations/api/conversation-participant-resource)
 - [Messages](https://www.twilio.com/docs/conversations/api/conversation-message-resource)
 - [Scoped Webhooks](https://www.twilio.com/docs/conversations/api/conversation-scoped-webhook-resource)
-
-
-## General use...
-Find -- ExTwilio.Conversations.Participant.find(<SID>, <RESOURCE>: <RESOURCE_SID>) (id/string, options/keyword-list)
-List -- ExTwilio.Conversations.Participant.all(<RESOURCE>: <RESOURCE_SID>) (options/keyword-list)
-Create -- ExTwilio.Conversations.Participant.create(<SID>, <DATA>, <RESOURCE>: <RESOURCE_SID>) (id/string, data-params/map options/keyword-list)
-Update -- ExTwilio.Conversations.Participant.update(SID, DATA, RESOURCE: <RESOURCE_SID>) (id/string, data-params/map options/keyword-list)
-Stream -- ExTwilio.Conversations.Participant.stream(<RESOURCE>: <RESOURCE_SID>) |> Enum.into([]) (lazy operation, contains meta details for paging)
-Delete -- ExTwilio.Conversations.Participant.destroy(<SID>, <RESOURCE>: <RESOURCE_SID>) (id/string, options/keyword-list)
 
 
 Twilio's TaskRouter API:
