@@ -48,18 +48,7 @@ defmodule ExTwilio.Parser do
       Poison.decode!(body, as: target(module))
     end)
     |> IO.inspect(label: "RESP-decoded")
-    |> case do
-      {:ok, res} ->
-        {:ok,
-         if Map.has_key?(res, :attributes) do
-           Map.update(res, :attributes, %{}, &Poison.decode!(&1))
-         else
-           res
-         end}
-
-      err ->
-        err
-    end
+    |> decode_attributes()
   end
 
   defp target(module) when is_atom(module), do: module.__struct__
@@ -101,6 +90,7 @@ defmodule ExTwilio.Parser do
         as = Map.put(%{}, key, [target(module)])
         Poison.decode!(body, as: as)
       end)
+      |> decode_attributes()
 
     case result do
       {:ok, list} -> {:ok, list[key], Map.drop(list, [key])}
@@ -120,6 +110,21 @@ defmodule ExTwilio.Parser do
       %{body: body, status_code: status} ->
         {:ok, json} = Poison.decode(body)
         {:error, json, status}
+    end
+  end
+
+  defp decode_attributes(pre_proccessed) do
+    case pre_proccessed do
+      {:ok, res} ->
+        {:ok,
+         if Map.has_key?(res, :attributes) do
+           Map.update(res, :attributes, %{}, &Poison.decode!(&1))
+         else
+           res
+         end}
+
+      err ->
+        err
     end
   end
 end

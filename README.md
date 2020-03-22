@@ -132,6 +132,17 @@ Twilio's Lookup Rest API:
 
 - [Lookup](https://www.twilio.com/docs/api/lookups)
 
+Twilio's Conversations API
+- [Overview](https://www.twilio.com/docs/conversations/api)
+- [Conversations](https://www.twilio.com/docs/conversations/api/conversation-resource)
+- [Participants](https://www.twilio.com/docs/conversations/api/conversation-participant-resource)
+- [Messages](https://www.twilio.com/docs/conversations/api/conversation-message-resource)
+- [Scoped Webhooks](https://www.twilio.com/docs/conversations/api/conversation-scoped-webhook-resource)
+
+
+- Create -- ExTwilio.Conversations.Participant.create(<SID>, <DATA>, <RESOURCE>: <RESOURCE_SID>) (id/string, data-params/map options/keyword-list)
+- Find -- ExTwilio.Conversations.Participant.find(<SID>, <RESOURCE>: <RESOURCE_SID>) (id/string, options/keyword-list)
+
 Twilio's TaskRouter API:
 
 - [Overview](https://www.twilio.com/docs/api/taskrouter/rest-api)
