@@ -46,15 +46,20 @@ defmodule ExTwilio.Parser do
 
     handle_errors(response, fn body ->
       Poison.decode!(body, as: target(module))
-      |> IO.inspect(label: "RESP-decoded")
-      |> case do
-        {:ok, res} ->
-          Enum.map(res, fn
-            {:attributes, val} -> {:attrubutes, Poison.decode!(val)}
-            {key, val} -> {key, val}
-          end)
-      end
     end)
+    |> IO.inspect(label: "RESP-decoded")
+    |> case do
+      {:ok, res} ->
+        {:ok,
+         if Map.has_key?(res, :attributes) do
+           Map.update(res, :attributes, %{}, &Poison.decode!(&1))
+         else
+           res
+         end}
+
+      err ->
+        err
+    end
   end
 
   defp target(module) when is_atom(module), do: module.__struct__
