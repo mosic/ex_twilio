@@ -66,8 +66,6 @@ defmodule ExTwilio.Api do
   @spec create(atom, data, any) :: Parser.success() | Parser.error()
   def create(module, data, options \\ []) do
     data = format_data(data)
-    IO.inspect(data, label: "DATA")
-    IO.inspect(options, label: "DATA-OPTS")
 
     module
     |> Url.build_url(nil, options)
@@ -188,16 +186,11 @@ defmodule ExTwilio.Api do
 
   @spec format_data(data) :: binary
   def format_data(data) when is_map(data) do
-    IO.inspect(data, label: "TAMOF")
-
     data
-    # |> Map.to_list()
     |> Url.to_query_string()
   end
 
   def format_data(data) when is_list(data) do
-    IO.inspect(data, label: "FOMAT")
-    IO.inspect(Url.to_query_string(data), label: "FOMAT-P")
     Url.to_query_string(data)
   end
 

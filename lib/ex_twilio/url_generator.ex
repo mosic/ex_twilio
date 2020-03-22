@@ -66,10 +66,6 @@ defmodule ExTwilio.UrlGenerator do
 
         ["ExTwilio", "Conversations" | _] ->
           url = add_segments(Config.conversations_url(), module, id, options)
-          IO.inspect(url, label: "UUUUUURRRRRLLLL")
-          IO.inspect(module, label: "MOD")
-          IO.inspect(id, label: "ID")
-          IO.inspect(options, label: "OPTS")
           {url, options}
 
         _ ->
@@ -84,8 +80,6 @@ defmodule ExTwilio.UrlGenerator do
   end
 
   defp append_querystring(url, module, options) when is_map(options) do
-    IO.inspect(options, label: "BOOM")
-
     if Map.has_key?(options, :query) do
       url <> options[:query]
     else
@@ -102,8 +96,6 @@ defmodule ExTwilio.UrlGenerator do
   end
 
   defp add_segments(url, module, id, options) do
-    IO.inspect(normalize_parents(module.parents), label: "NORMALIZE")
-
     # Append parents
     url = url <> build_segments(:parent, normalize_parents(module.parents), options)
 
@@ -122,7 +114,7 @@ defmodule ExTwilio.UrlGenerator do
       iex> ExTwilio.UrlGenerator.to_query_string([hello: "world", how_are: "you"])
       "Hello=world&HowAre=you"
   """
-  @spec to_query_string(list) :: String.t()
+  @spec to_query_string(any) :: String.t()
   def to_query_string(list) do
     list
     |> Enum.flat_map(fn
@@ -131,18 +123,13 @@ defmodule ExTwilio.UrlGenerator do
 
       {key, value} when is_map(value) ->
         Enum.map(value, fn {subKey, subVal} ->
-          IO.inspect(key, label: "ATTRS-KEY")
-          IO.inspect(value, label: "ATTRS-VAL")
           {"#{camelize(key)}.#{camelize(subKey)}", subVal}
         end)
-        |> IO.inspect(label: "QS1")
 
       {key, value} ->
         [{camelize(key), value}]
     end)
-    |> IO.inspect(label: "QS1")
     |> Plug.Conn.Query.encode()
-    |> IO.inspect(label: "QS2")
   end
 
   @doc """
@@ -200,8 +187,6 @@ defmodule ExTwilio.UrlGenerator do
 
   @spec normalize_parents(list) :: list
   defp normalize_parents(parents) do
-    IO.inspect(parents, label: "NORMY")
-
     parents
     |> Enum.map(fn
       key when is_atom(key) ->
@@ -231,42 +216,24 @@ defmodule ExTwilio.UrlGenerator do
 
   @spec build_segments(atom, list, list) :: String.t()
   defp build_segments(:parent, allowed_keys, list) do
-    IO.inspect(:parent, label: "PARENT")
-    IO.inspect(allowed_keys, label: "ALLOWED")
-
     for %ExTwilio.Parent{module: module, key: key} <- allowed_keys,
         into: "" do
-      IO.inspect(module, label: "PAR-MOD")
-      IO.inspect(key, label: "PAR-KEY")
-      IO.inspect(list, label: "PAR-list")
-      IO.inspect(list[key], label: "PAR-list[key]")
       segment(:parent, {%ExTwilio.Parent{module: module, key: key}, list[key]})
     end
   end
 
   defp build_segments(type, allowed_keys, list) do
-    IO.inspect(type, label: "TYPE")
     for key <- allowed_keys, into: "", do: segment(type, {key, list[key]})
   end
 
   @spec segment(atom, {any, any}) :: String.t()
   defp segment(type, segment)
-
-  defp segment(type, {_key, nil}) when type in [:parent, :child] do
-    IO.inspect(type, label: "SEG-TYPE1")
-    ""
-  end
-
-  defp segment(:child, {_key, value}) do
-    IO.inspect(value, label: "SEG-TYPE2")
-    "/" <> to_string(value)
-  end
-
+  defp segment(type, {_key, nil}) when type in [:parent, :child], do: ""
+  defp segment(:child, {_key, value}), do: "/" <> to_string(value)
   defp segment(:main, {key, nil}), do: "/" <> inflect(key)
   defp segment(:main, {key, value}), do: "/#{inflect(key)}/#{value}"
 
   defp segment(:parent, {%ExTwilio.Parent{module: module, key: _key}, value}) do
-    IO.inspect(module, label: "NEEDED-MOD")
     "/#{module.resource_name}/#{value}"
   end
 
@@ -282,6 +249,3 @@ defmodule ExTwilio.UrlGenerator do
     name |> to_string |> Macro.camelize()
   end
 end
-
-# {:ok, convo} = ExTwilio.Conversations.find("CH9b7a8ea7c49242f1b4ef84988bacabb0")
-# ExTwilio.Conversations.Participant.create(%{messaging_binding: %{address: "+19492808977", proxy_address: "+16502002193"}, attributes: %{role: "admin", user_id: 6}}, conversation: convo.sid)

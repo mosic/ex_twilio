@@ -42,12 +42,9 @@ defmodule ExTwilio.Parser do
   """
   @spec parse(HTTPoison.Response.t(), module) :: success | error
   def parse(response, module) do
-    IO.inspect(module, label: "MODULE")
-
     handle_errors(response, fn body ->
       Poison.decode!(body, as: target(module))
     end)
-    |> IO.inspect(label: "RESP-decoded")
     |> decode_attributes()
   end
 
