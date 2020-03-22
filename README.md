@@ -140,8 +140,14 @@ Twilio's Conversations API
 - [Scoped Webhooks](https://www.twilio.com/docs/conversations/api/conversation-scoped-webhook-resource)
 
 
-- Create -- ExTwilio.Conversations.Participant.create(<SID>, <DATA>, <RESOURCE>: <RESOURCE_SID>) (id/string, data-params/map options/keyword-list)
+- General use...
 - Find -- ExTwilio.Conversations.Participant.find(<SID>, <RESOURCE>: <RESOURCE_SID>) (id/string, options/keyword-list)
+- List -- ExTwilio.Conversations.Participant.all(<RESOURCE>: <RESOURCE_SID>) (options/keyword-list)
+- Create -- ExTwilio.Conversations.Participant.create(<SID>, <DATA>, <RESOURCE>: <RESOURCE_SID>) (id/string, data-params/map options/keyword-list)
+- Update -- ExTwilio.Conversations.Participant.update(<SID>, <DATA>, <RESOURCE>: <RESOURCE_SID>) (id/string, data-params/map options/keyword-list)
+- Stream -- ExTwilio.Conversations.Participant.stream(<RESOURCE>: <RESOURCE_SID>) |> Enum.into([]) (lazy operation, contains meta details for paging)
+- Delete -- ExTwilio.Conversations.Participant.destroy(<SID>, <RESOURCE>: <RESOURCE_SID>) (id/string, options/keyword-list)
+
 
 Twilio's TaskRouter API:
 

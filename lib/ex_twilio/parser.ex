@@ -130,8 +130,10 @@ defmodule ExTwilio.Parser do
           pre
         end
 
+      {:error, err} ->
+        {:error, err}
+
       err ->
-        IO.inspect(err, label: "BOOOOOOOOOOOOOOOOOOOOM")
         err
     end
   end

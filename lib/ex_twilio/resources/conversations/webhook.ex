@@ -27,9 +27,4 @@ defmodule ExTwilio.Conversations.Webhook do
       :find,
       :update
     ]
-
-  def parents,
-    do: [
-      %ExTwilio.Parent{module: ExTwilio.Conversations.Conversation, key: :conversation}
-    ]
 end
