@@ -45,7 +45,6 @@ defmodule ExTwilio.Parser do
     handle_errors(response, fn body ->
       Poison.decode!(body, as: target(module))
     end)
-    |> decode_attributes()
   end
 
   defp target(module) when is_atom(module), do: module.__struct__
@@ -88,9 +87,8 @@ defmodule ExTwilio.Parser do
         Poison.decode!(body, as: as)
       end)
 
-    # |> Enum.map(list[key], &decode_attributes(&1))
     case result do
-      {:ok, list} -> {:ok, Enum.map(list[key], &decode_attributes(&1)), Map.drop(list, [key])}
+      {:ok, list} -> {:ok, list[key], Map.drop(list, [key])}
       error -> error
     end
   end
@@ -107,33 +105,6 @@ defmodule ExTwilio.Parser do
       %{body: body, status_code: status} ->
         {:ok, json} = Poison.decode(body)
         {:error, json, status}
-    end
-  end
-
-  defp decode_attributes(pre_proccessed) do
-    case pre_proccessed do
-      {:ok, res} ->
-        {:ok,
-         if Map.has_key?(res, :attributes) do
-           attrs = Poison.decode!(res.attributes)
-           IO.inspect(attrs, label: "ATTRS")
-           Map.update(res, :attributes, %{}, attrs)
-         else
-           res
-         end}
-
-      pre when is_map(pre) ->
-        if Map.has_key?(pre, :attributes) do
-          Map.update(pre, :attributes, %{}, &Poison.decode!(&1))
-        else
-          pre
-        end
-
-      {:error, err} ->
-        {:error, err}
-
-      err ->
-        err
     end
   end
 end
