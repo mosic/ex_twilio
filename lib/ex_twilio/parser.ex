@@ -116,7 +116,7 @@ defmodule ExTwilio.Parser do
       {:ok, res} ->
         {:ok,
          if Map.has_key?(res, :attributes) do
-           Map.update(res, :attributes, %{}, &Poison.decode!(&1))
+           Map.update(res, :attributes, %{}, &Poison.decode(&1))
          else
            res
          end}
