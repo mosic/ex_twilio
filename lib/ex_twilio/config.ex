@@ -49,20 +49,13 @@ defmodule ExTwilio.Config do
   settings given.
   """
   def base_url, do: "#{protocol()}://#{api_domain()}/#{api_version()}"
-
-  def fax_url, do: "https://fax.twilio.com/v1"
-
-  def task_router_url, do: "https://taskrouter.twilio.com/v1"
-
-  def task_router_websocket_base_url, do: "https://event-bridge.twilio.com/v1/wschannels"
-
-  def programmable_chat_url, do: "https://chat.twilio.com/v2"
-
-  def notify_url, do: "https://notify.twilio.com/v1"
-
-  def studio_url, do: "https://studio.twilio.com/v1"
-
-  def conversations_url, do: "https://conversations.twilio.com/v1"
+  def fax_url, do: hijack_url("https://fax.twilio.com/v1")
+  def task_router_url, do: hijack_url("https://taskrouter.twilio.com/v1")
+  def task_router_websocket_base_url, do: hijack_url("https://event-bridge.twilio.com/v1/wschannels")
+  def programmable_chat_url, do: hijack_url("https://chat.twilio.com/v2")
+  def notify_url, do: hijack_url("https://notify.twilio.com/v1")
+  def studio_url, do: hijack_url("https://studio.twilio.com/v1")
+  def conversations_url, do: hijack_url("https://conversations.twilio.com/v1")
 
   @doc """
   A light wrapper around `Application.get_env/2`, providing automatic support for
@@ -74,6 +67,10 @@ defmodule ExTwilio.Config do
     otp_app
     |> Application.get_env(key, default)
     |> read_from_system(default)
+  end
+
+  defp hijack_url(url) do
+    if api_domain() === "api.twilio.com", do: url, else: "http://#{api_domain()}"
   end
 
   defp read_from_system({:system, env}, default), do: System.get_env(env) || default
