@@ -90,10 +90,10 @@ defmodule ExTwilio.Parser do
         as = Map.put(%{}, key, [target(module)])
         Poison.decode!(body, as: as)
       end)
-      |> decode_attributes()
 
+    # |> Enum.map(list[key], &decode_attributes(&1))
     case result do
-      {:ok, list} -> {:ok, list[key], Map.drop(list, [key])}
+      {:ok, list} -> {:ok, Enum.map(list[key], &decode_attributes(&1)), Map.drop(list, [key])}
       error -> error
     end
   end
