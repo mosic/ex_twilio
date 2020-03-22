@@ -45,7 +45,7 @@ defmodule ExTwilio.Parser do
     handle_errors(response, fn body ->
       Poison.decode!(body, as: target(module))
     end)
-    IO.inspect(label: "PARSE")
+    |> IO.inspect(label: "PARSE")
     |> decode_attributes()
   end
 
